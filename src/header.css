@@ -1,0 +1,13 @@
+.header {
+    display: flex;
+
+}
+
+.headerLeft {
+    display: flex;
+}
+
+.headerLeft > img {
+    object-fit: contain;
+    height: 40px;
+}
