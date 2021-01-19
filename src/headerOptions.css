@@ -10,3 +10,14 @@
 .headerOption:hover {
     color: black;
 }
+
+.headerOptionIcon {
+    object-fit: contain;
+    height: 25px !important;
+    width: 25px !important;
+}
+
+.headerOptionTitle {
+    font-size: 12px;
+    font-weight: 400;
+}
