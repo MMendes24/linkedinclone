@@ -6,8 +6,8 @@ import Sidebar from "./Sidebar"
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="app">
+      <header className="appHeader">
         {/*header*/}
         <Header />
         {/*App Body*/}
