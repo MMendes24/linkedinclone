@@ -31,7 +31,7 @@ const Feed = () => {
         db.collection("posts").add({
             name: "Mars Mendes",
             description: "this a test",
-            message: ""
+            message: "We needed a message here! Wow it works!"
         })
     }
 
