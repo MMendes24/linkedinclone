@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react"
 import InputOption from "./InputOption"
 import Post from "./Post"
 import { db } from "./firebase"
+import firebase from "firebase"
 
 import CreateIcon from '@material-ui/icons/Create'
 import ImageIcon from '@material-ui/icons/Image'
@@ -16,11 +17,14 @@ const Feed = () => {
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
-        db.collection("posts").onSnapshot(snapshot => {
+        db.collection("posts")
+        .orderBy("timestamp", "desc")
+        .onSnapshot(snapshot => {
             setPosts(
                 snapshot.docs.map((doc) => ({
                     id: doc.id,
                     data: doc.data()
+
                 }))
             )
         })
@@ -31,7 +35,9 @@ const Feed = () => {
         db.collection("posts").add({
             name: "Mars Mendes",
             description: "this a test",
-            message: ""
+            message: input,
+            photoURL: "",
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
         })
     }
 
@@ -41,7 +47,7 @@ const Feed = () => {
                 <div className="feedInput">
                     <CreateIcon />
                     <form>
-                        <input type="text" onChange={e => setInput(e)}/>
+                        <input type="text" onChange={e => setInput(e.target.value)} />
                         <button onClick={sendPost} type="submit">Send</button>
                     </form>
                 </div>
@@ -54,18 +60,18 @@ const Feed = () => {
             </div>
 
             {/* Posts */}
-            {posts.map((post) => {
+            {posts.map(({ id, data: { name, description, message,
+                photoURL } }) => {
                 return (
-                    <Post />
+                    <Post 
+                    key={id}
+                    name={name}
+                    description={description}
+                    message={message}
+                    photoUrl={photoURL}
+                    />
                 )
             })}
-
-            <Post
-                name="Mars Mendes"
-                description="This is a test"
-                message="Wow this worked!"
-            />
-
         </div>
     )
 }
