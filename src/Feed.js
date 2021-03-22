@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react"
 import InputOption from "./InputOption"
 import Post from "./Post"
 import { db } from "./firebase"
+import firebase from "firebase"
 
 import CreateIcon from '@material-ui/icons/Create'
 import ImageIcon from '@material-ui/icons/Image'
@@ -21,6 +22,7 @@ const Feed = () => {
                 snapshot.docs.map((doc) => ({
                     id: doc.id,
                     data: doc.data()
+                
                 }))
             )
         })
@@ -31,7 +33,9 @@ const Feed = () => {
         db.collection("posts").add({
             name: "Mars Mendes",
             description: "this a test",
-            message: "We needed a message here! Wow it works!"
+            message: input,
+            photoURL: "",
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
         })
     }
 
@@ -41,7 +45,7 @@ const Feed = () => {
                 <div className="feedInput">
                     <CreateIcon />
                     <form>
-                        <input type="text" onChange={e => setInput(e)}/>
+                        <input type="text" onChange={e => setInput(e.target.value)}/>
                         <button onClick={sendPost} type="submit">Send</button>
                     </form>
                 </div>
